@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <link href="../../../src/main/resources/static/asserts/css/bootstrap.min.css" th:href="@{/static/asserts/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../../src/main/resources/static/asserts/css/dashboard.css" th:href=" @{/static/asserts/css/dashboard.css}" rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+</head>
+
+<body>
+<!--引入抽取的topbar-->
+<!--模板名：会使用thymeleaf的前后缀配置规则进行解析-->
+<div th:replace="commons/bar::topbar"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <!--引入侧边栏-->
+        <div th:replace="commons/bar::sidebar(activeUri='sector')"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+            <!--注意：href超链接本身就是get方式-->
+            <form  id="sector" th:action="@{/sector/update}" method="post">
+                <table>
+                    <tr>
+                        <th>经理</th>
+                        <th>大棚个数</th>
+                        <th>详情</th>
+                        <th>提交</th>
+                    </tr>
+                    <br>
+<!--                    <input type="hidden" name="_method" value="put" />-->
+                    <td><input type="text"  th:value="${s.manager}" name="manager"/></td>
+                    <td><input type="text"  th:value="${s.house_number}" name="house_number"/></td>
+                    <td><input type="text"  th:value="${s.info}" name="info"/></td>
+                    <td><input type="submit" value="添加"/></td>
+                    <td><input type="hidden"  th:value="${s.id}" name="id" /></td>
+                    </tr>
+                </table>
+            </form>
+        </main>
+    </div>
+</div>
+
+</body>
+</html>

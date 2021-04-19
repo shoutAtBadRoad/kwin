@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kwin.db.test.manage.mapper.NewsMapper">
+<!--
+    @Insert("insert into k_news(title,w_date)values(#{title},#{date})")
+    boolean insertNews(String title,Date date);
+
+    @Select("select * from k_news")
+    List<News> getAllNews();
+
+    @Delete("delete from k_news where id=#{id}")
+    boolean deleteNewsById(Integer id);
+ -->
+    <select id="getAllNews" resultType="com.kwin.db.test.manage.entity.News">
+        select * from k_news
+    </select>
+    <insert id="insertNews">
+        insert into k_news(title,w_date)values(#{title},#{date})
+    </insert>
+    <delete id="deleteNewsById">
+        delete from k_news where id=#{id}
+    </delete>
+</mapper>

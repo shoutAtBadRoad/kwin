@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>克胜后台管理系统</title>
+		<!-- Bootstrap core CSS -->
+		<link href="../../static/asserts/css/bootstrap.min.css" th:href="@{/static/asserts/css/bootstrap.min.css}" rel="stylesheet">
+
+		<!-- Custom styles for this template -->
+		<link href="../../static/asserts/css/dashboard.css" th:href=" @{/static/asserts/css/dashboard.css}" rel="stylesheet">
+		<style type="text/css">
+			/* Chart.js */
+			
+			@-webkit-keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+			
+			@keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+			
+			.chartjs-render-monitor {
+				-webkit-animation: chartjs-render-animation 0.001s;
+				animation: chartjs-render-animation 0.001s;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--引入抽取的topbar-->
+		<!--模板名：会使用thymeleaf的前后缀配置规则进行解析-->
+		<div th:replace="commons/bar::topbar"></div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<!--引入侧边栏-->
+				<div th:replace="commons/bar::sidebar(active='sensor')"></div>
+
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+					<!--注意：href超链接本身就是get方式-->
+<!--					<p style="color: #ff0000" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>-->
+					<h2><a class="btn btn-sm btn-success"  th:href="@{/req/req(sector_id=${sector_id},house_id=${house_id})}" th:if="${not #strings.isEmpty(house_id) and not #strings.isEmpty(sector_id)}">传感器添加</a></h2>
+<!--					<h2><a class="btn btn-sm btn-success"  th:href="@{/house/show/}+${sector_id - 1}">上一区块</a></h2>-->
+<!--					<h2><a class="btn btn-sm btn-success"  th:href="@{/house/show/}+${sector_id + 1}">下一区块</a></h2>-->
+					<div class="table-responsive">
+						<table class="table table-striped table-sm">
+							<thead>
+								<tr>
+									<th>编号</th>
+									<th>区块号</th>
+									<th>大棚号</th>
+									<th>网关</th>
+									<th>设备号</th>
+									<th>相关操作</th>
+								</tr>
+							</thead>
+							<tbody>
+							   <!--thymeleaf的遍历-->
+                              <tr th:each="h,st:${sr}">
+								  <td th:text="${st.index}"></td>
+								  <td th:text="${h.sector_id}"></td>
+								  <td th:text="${h.house_id}"></td>
+								  <td th:text="${h.logo}"></td>
+								  <td th:text="${h.sensor_name}"></td>
+								  <!--使用dates.format工具修改日期的格式-->
+<!--								  <td th:text="${#dates.format(emp.birth,'yyyy-MM-dd HH:mm')}"></td>-->
+									  <!--使用bootStrap提供的css样式-->
+									  <!--btn primary 小号按钮 btn-danger 警告按钮-->
+								  <td>
+									  <a class="btn btn-sm btn-primary" th:href="@{/req/edit/}+${h.id}">编辑</a>
+<!--								  	  <a class="btn btn-sm btn-primary" th:href="@{/sensor/show/}+${h.id}">传感器</a>-->
+									  <button th:attr="del_uri=@{/req/delete/}+${h.id}" class="btn btn-sm btn-danger deleteBtn">删除</button>
+								  </td>
+							  </tr>
+							</tbody>
+						</table>
+					</div>
+				</main>
+				<form id="deleteEmpForm" method="post" >
+					<input type="hidden" name="_method" value="delete"/>
+				</form>
+			</div>
+		</div>
+
+		<!-- Bootstrap core JavaScript>
+    ================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script type="text/javascript" src="../../static/asserts/js/jquery-3.2.1.slim.min.js"></script>
+		<script type="text/javascript" src="../../static/asserts/js/popper.min.js"></script>
+		<script type="text/javascript" src="../../static/asserts/js/bootstrap.min.js"></script>
+		<script type="text/javascript"  th:inline="none"></script>
+		<!-- Icons -->
+		<script type="text/javascript" src="../../static/asserts/js/feather.min.js"></script>
+		<script>
+			feather.replace()
+		</script>
+		<script>
+			$(".deleteBtn").click(function(){
+				$("#deleteEmpForm").attr("action",$(this).attr("del_uri")).submit();
+				return false;
+			});
+		</script>
+
+	</body>
+
+</html>

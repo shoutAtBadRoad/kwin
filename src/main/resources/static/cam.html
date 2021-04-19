@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<!--    <title>Title</title>-->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <title>实时视频监控</title>
+    <link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.8.8/skins/default/aliplayer-min.css" />
+    <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/de/prismplayer/2.8.8/aliplayer-min.js"></script>
+</head>
+<body>
+<div class="prism-player" id="player-con"></div>
+<script>
+    var player = new Aliplayer({
+            "id": "player-con",
+            "source":"https://tx1.yunchuanglive.com/live/SSAA-337220-ABDCB.m3u8" ,  //无云台摄像头https://tx1.yunchuanglive.com/live/SSAA-152064-BBABE.m3u8
+            "width": "100%",
+            "height": "500px",
+            "autoplay": true,
+            "isLive": true,
+            "rePlay": true,
+            "playsinline": true,
+            "preload": true,
+            "controlBarVisibility": "hover",
+            "useH5Prism": true
+        }, function (player) {
+            console.log("The player is created");
+        }
+    );
+
+
+    $(function () {
+        $("#up").click(function () {
+            $.ajax({
+                url:"/db-0.0.1/cam/up",
+                type:"GET",
+                dataType:"text"
+            })
+        })
+        $("#down").click(function () {
+            $.ajax({
+                url:"/db-0.0.1/cam/down",
+                type:"GET",
+                dataType:"text"
+            })
+        })
+
+        $("#left").click(function () {
+            $.ajax({
+                url:"/db-0.0.1/cam/left",
+                type:"GET",
+                dataType:"text"
+            })
+        })
+
+        $("#right").click(function () {
+            $.ajax({
+                url:"/db-0.0.1/cam/right",
+                type:"GET",
+                dataType:"text"
+            })
+        })
+
+        $("#zoomin").click(function () {
+            $.ajax({
+                url:"/db-0.0.1/cam/zoomin",
+                type:"GET",
+                dataType:"text"
+            })
+        })
+
+        $("#pullaway").click(function () {
+            $.ajax({
+                url:"/db-0.0.1/cam/pullaway",
+                type:"GET",
+                dataType:"text"
+            })
+        })
+    })
+
+</script>
+<!--        <video id="cam" src="rtmp://tx1rtmp.yunchuanglive.com/live/SSAA-337220-ABDCB"></video>-->
+        <button type="button" id="up" >上</button>
+        <button type="button" id="down" >下</button>
+        <button type="button" id="left" >左</button>
+        <button type="button" id="right" >右</button>
+        <button type="button" id="zoomin" >拉近</button>
+        <button type="button" id="pullaway" >拉远</button>
+</body>
+</html>

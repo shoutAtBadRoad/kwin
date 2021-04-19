@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    #数据源基本配置
+    username: root
+    password: lcl_alihost_2019070270
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://101.133.137.140:3306/db_agri_intel?serverTimezone=GMT%2B8
+    type: com.alibaba.druid.pool.DruidDataSource
+    #数据源其他配置
+    initialSize: 5
+    minIdle: 5
+    maxWait: 60000
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  mvc:
+    static-path-pattern: /static/**
+    format:
+      date-time: yyyy-MM-dd HH:mm:ss
+#mybatios扫描配置
+mybatis:
+  #  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+#server:
+#  port: 8081
+#  address: 0.0.0.0
+#server:
+#  servlet:
+#    context-path: /db-0.0.1
+#SSL Key Info
+#security:
+#  require-ssl: true
+#server:
+#  ssl:
+#    key-store-password: jyjyp123
+#    key-store: src/main/resources/ebininfosoft-ssl-key.p12
+#    key-store-type: PKCS12
+#logging:
+#  file:
+#    path: /log

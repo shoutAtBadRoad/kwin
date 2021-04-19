@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kwin.db.test.user.mapper.UserMapper">
+
+    <select id="getUser" resultType="com.kwin.db.test.user.entity.User">
+        select * from k_user where userName=#{userName} and password=#{password}
+    </select>
+    <select id="getAdmin" resultType="com.kwin.db.test.user.entity.Admin">
+        select adminId,userName,password,name,tel from t_admin where userName=#{userName} and password=#{password}
+    </select>
+    <select id="getSystemManager" resultType="com.kwin.db.test.user.entity.SystemManager">
+        select systemManagerId,userName,password,companyId,name,tel
+        from t_systemmanager where userName=#{userName} and password=#{password}
+    </select>
+    <select id="getVistor" resultType="com.kwin.db.test.user.entity.Visitor">
+        select userName,password from t_visitor where userName=#{username}
+    </select>
+
+</mapper>

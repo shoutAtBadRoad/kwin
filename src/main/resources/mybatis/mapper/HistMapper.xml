@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kwin.db.mapper.HistMapper">
+<!--//根据时间段查询所有数据
+    public List<SensorData> getShowDataByTime(Date begin, Data end);
+        //查询大棚下的传感器数据
+    List<SensorData> getShowDataByTimeAndHouse(Date begin, Date end, Integer h_id);-->
+    
+    <select id="getShowDataByTime" resultType="com.kwin.db.entity.SensorData">
+        select sensor_id,date,temperature,humidity,soil_temperature,soil_humidity from sensordt where date between #{begin} and #{end};
+    </select>
+
+    <select id="getShowDataByTimeAndHouse" resultType="com.kwin.db.entity.SensorData">
+        select sensor_id,date,temperature,humidity,soil_temperature,soil_humidity from sensordt where date between #{begin} and #{end}
+        and sensor_id in (select id from sensorcache where sector_id=#{s_id} and house_id=#{h_id})
+    </select>
+
+
+</mapper>

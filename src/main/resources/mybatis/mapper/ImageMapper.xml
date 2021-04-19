@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kwin.db.mapper.ImageMapper">
+    <!--
+    //查询图片
+    public Image getBlobById(Integer id);
+    //插入图片
+        public boolean insertBlob(Integer cam,String blob);-->
+
+    <insert id="insertBlob" >
+        insert into image(img,cam)values (#{blob},#{cam})
+    </insert>
+
+    <select id="getBlobById" resultType="com.kwin.db.entity.Image">-- resultMap="queryBaseResultMap"
+        select id,img,cam from image where id=#{id}
+    </select>
+<!--    <resultMap id="queryBaseResultMap" type="com.kwin.db.entity.Image" >-->
+<!--        <id column="id" property="id" jdbcType="INTEGER" />-->
+<!--        <result column="cam" property="cam" jdbcType="INTEGER" />-->
+<!--        <result column="img" property="img" typeHandler="com.kwin.db.test.BlobTypeHandler"/>-->
+<!--    </resultMap>-->
+
+</mapper>

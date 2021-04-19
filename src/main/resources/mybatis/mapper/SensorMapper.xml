@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kwin.db.mapper.SensorMapper">
+
+<!--
+    //得到数据库中的sensor对象数据
+    SensorData getShowData(Integer s_id);
+    //得到数据库中所有的sensor数据
+    List<SensorData> getAllShowData();-->
+    <select id="getShowData" resultType="com.kwin.db.entity.SensorData">
+        select sensor_id,date,temperature,humidity,soil_temperature,soil_humidity from sensordt where sensor_id=#{id} order by id desc limit 1
+    </select>
+    <select id="getAllShowData" resultType="com.kwin.db.entity.SensorData">
+        select sensor_id,date,temperature,humidity,soil_temperature,soil_humidity from sensordt
+    </select>
+
+<!--        //根据大棚id查询摄像头视频流和mac地址
+    Camera getCam(Integer id);
+    //添加摄像头
+    boolean insertCam(Integer sector_id,Integer house_id,String mac,String url);
+    //根据id更新摄像头数据
+    boolean updateCamById(Integer id,Integer sector_id,Integer house_id,String mac,String url);
+    //删除摄像头
+    boolean deleteCamById(Integer id);
+        //根据sector与house取得所有摄像头信息
+    Camera getAllCamBy2Id(Integer s_id,Integer h_id);
+        //查询所有的摄像头
+    List<Camera> getAllCam();-->
+    <select id="getCam" resultType="com.kwin.db.entity.Camera">
+        select * from k_cam where id=#{id}
+    </select>
+    <insert id="insertCam">
+        insert into k_cam(sector_id,house_id,mac,url)values (#{sector_id},#{house_id},#{mac},#{url})
+    </insert>
+    <update id="updateCamById">
+        update k_cam set sector_id=#{sector_id},house_id=#{house_id},mac=#{mac},url=#{url} where id=#{id}
+    </update>
+    <delete id="deleteCamById">
+        delete from k_cam where id=#{id}
+    </delete>
+    <select id="getCamBy2Id" resultType="com.kwin.db.entity.Camera">
+        select * from k_cam where sector_id=#{s_id} and house_id=#{h_id} order by id limit 1
+    </select>
+    <select id="getAllCamBy2Id" resultType="com.kwin.db.entity.Camera">
+        select * from k_cam where sector_id=#{s_id} and house_id=#{h_id}
+    </select>
+    <select id="getAllCam" resultType="com.kwin.db.entity.Camera">
+        select * from k_cam
+    </select>
+
+
+
+
+<!--
+    //取出所有预警信息
+    List<Warn> getAll(Integer type);
+    //根据id取出该大棚下的所有预警信息
+    List<Warn> getAllWarn(Integer id);
+    //查询预警信息的条数
+     Integer getWarnNumByType();
+    //向warn表中插入预警信息
+    boolean insertWarn(Integer house_id, String context, Integer read, Date date, Integer type);
+    //根据id删除预警信息
+    boolean deleteWarnById(Integer id);
+    //删除所有预警信息
+    boolean deleteAllWarn(Integer type);
+    //根据id设置预警信息为已读（w_read=1）
+    boolean updateWarnById(Integer id);
+    //根据大棚id将所有消息设置为已读
+    boolean updateAllWarn(Integer id);-->
+    <select id="getAll" resultType="com.kwin.db.entity.Warn">
+        select * from warning where type=#{type}
+    </select>
+    <select id="getAllWarnByHouse" resultType="com.kwin.db.entity.Warn">
+        select * from warning where house_id=#{id} and w_read=0 and type=#{type}
+    </select>
+    <select id="getWarnNumByType" resultType="java.lang.Integer">
+        select count(*) from warning where type=#{type}
+    </select>
+    <insert id="insertWarn">
+        insert warning(house_id,context,w_read,w_date,type)values(#{house_id},#{context},#{read},#{date},#{type})
+    </insert>
+
+    <delete id="deleteWarnById">
+        delete from warning where id=#{id}
+    </delete>
+
+    <delete id="deleteAllWarn">
+        delete from warning where type=#{type}
+    </delete>
+
+    <update id="updateWarnById">
+        update warning set w_read=1 where id=#{id}
+    </update>
+
+    <update id="updateAllWarn">
+        update warning set w_read=1 where house_id=#{id}
+    </update>
+
+
+</mapper>
